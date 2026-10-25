@@ -1,0 +1,2 @@
+-keep class com.fh.adskip.** { *; }
+-dontwarn android.support.**

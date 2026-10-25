@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="跳 广 助 手"
+            android:textColor="@color/text"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            android:letterSpacing="0.12" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="全自动跳过小游戏激励广告 · 无需 root"
+            android:textColor="@color/text2"
+            android:textSize="13sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:background="@color/card"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="总开关"
+                android:textColor="@color/text"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <Switch
+                android:id="@+id/switch_vpn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="开启后自动拦截广告请求"
+                android:textColor="@color/text"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/tv_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:text="状态：未开启"
+                android:textColor="@color/text2"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/tv_counter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:text="已拦截广告域名请求：0 次"
+                android:textColor="@color/accent"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/btn_open_settings"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:backgroundTint="@color/card"
+                android:text="查看系统 VPN 授权"
+                android:textColor="@color/text2"
+                android:textSize="13sp" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="工作原理"
+            android:textColor="@color/text"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:lineSpacingExtra="5dp"
+            android:text="开启后会建立一个仅拦截 DNS 的本地 VPN：穿山甲、优量汇、快手等广告域名的解析被直接拒绝，广告 SDK 拉不到素材即失败。绝大多数小游戏在拿不到广告时会立即关闭广告页或直接发放奖励——不需要模拟点击，不需要 root。"
+            android:textColor="@color/text2"
+            android:textSize="13sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:lineSpacingExtra="5dp"
+            android:text="注意：本 VPN 只接管域名解析，不转发游戏流量，不影响网速。部分强制走 HTTP 直连 IP 的广告（极少数）无法拦截。"
+            android:textColor="@color/text2"
+            android:textSize="13sp" />
+    </LinearLayout>
+</ScrollView>
