@@ -189,7 +189,7 @@ public class AdSkipVpnService extends VpnService {
         int qEnd = span[0];
 
         byte[] answer;
-        if (AdHosts.isAdHost(qname)) {
+        if (AdHosts.INSTANCE.isAdHost(qname)) {
             blockedCount.incrementAndGet();
             persist();
             answer = buildRcode(dns, qEnd, 3);
