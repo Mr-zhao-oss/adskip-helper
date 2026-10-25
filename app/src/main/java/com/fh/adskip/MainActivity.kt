@@ -62,11 +62,18 @@ class MainActivity : Activity() {
     private lateinit var withdrawLog: TextView
     private lateinit var credList: LinearLayout
     private lateinit var loginResult: TextView
+    private lateinit var accStatus: TextView
+    private lateinit var closeStat: TextView
 
     private val refresh = object : Runnable {
         override fun run() {
             val on = AdSkipVpnService.running
             if (swJump.isChecked != on) swJump.isChecked = on
+            updateAccStatus()
+            if (::closeStat.isInitialized) {
+                closeStat.text = "已自动关闭广告页 ${AdCloseService.closedCount(this@MainActivity)} 次" +
+                        " · 已拦截域名请求 ${AdSkipVpnService.prefs(this@MainActivity).getLong("blocked", 0)} 次"
+            }
             handler.postDelayed(this, 1500)
         }
     }
@@ -132,7 +139,25 @@ class MainActivity : Activity() {
         loginResult = value("登录结果/accessKey\n$accessKey")
         box.addView(loginResult)
         box.addView(btnSmall("复制") { copy(accessKey) })
+
+        box.addView(title("广告页自动关闭（真功能）"))
+        accStatus = value("")
+        box.addView(accStatus)
+        box.addView(btn("去开启无障碍") {
+            startActivity(Intent(android.provider.Settings.ACTION_ACCESSIBILITY_SETTINGS))
+        })
         return wrap(box)
+    }
+
+    private fun updateAccStatus() {
+        if (!::accStatus.isInitialized) return
+        val on = AdCloseService.enabledFromSettings(this)
+        val closed = AdCloseService.closedCount(this)
+        accStatus.text = if (on)
+            "已开启 · 已自动关闭广告页 $closed 次"
+        else
+            "未开启（去系统设置里勾选「广告页自动关闭」后立即生效）"
+        accStatus.setTextColor(if (on) 0xFF22C55E.toInt() else 0xFF8A97A8.toInt())
     }
 
     private fun qrDemo() {
@@ -166,6 +191,9 @@ class MainActivity : Activity() {
         box.addView(title("数据"))
         box.addView(pickRow("游戏", { games[gameIndex] }) { pickGame { } })
         box.addView(value("登录结果/accessKey\n$accessKey"))
+
+        closeStat = value("已自动关闭广告页 0 次")
+        box.addView(closeStat)
 
         box.addView(row2(
             btn("查询数据") { queryData() },

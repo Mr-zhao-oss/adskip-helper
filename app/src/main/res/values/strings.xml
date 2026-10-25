@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">跳广助手</string>
+    <string name="app_name">小游戏助手</string>
     <string name="vpn_channel">跳广运行中</string>
     <string name="vpn_channel_desc">保持广告拦截持续生效</string>
+    <string name="acc_label">广告页自动关闭</string>
+    <string name="acc_desc">用于自动点击小游戏广告页上的「关闭/跳过/领取」按钮，实现跳广。只读取当前窗口的控件文字，不收集任何数据。</string>
 </resources>
