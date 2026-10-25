@@ -48,6 +48,7 @@ public class AdSkipVpnService extends VpnService {
 
     private ParcelFileDescriptor tun;
     private volatile boolean stopped = false;
+    private volatile String mode = "white";
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
@@ -64,6 +65,7 @@ public class AdSkipVpnService extends VpnService {
         tun = fd;
         stopped = false;
         running = true;
+        mode = prefs(this).getString("mode", "white");
         blockedCount.set(prefs(this).getLong("blocked", 0));
         new Thread(() -> loop(fd), "dns-filter").start();
         return START_STICKY;
@@ -188,10 +190,16 @@ public class AdSkipVpnService extends VpnService {
         if (qname == null) return null;
         int qEnd = span[0];
 
+        boolean whiteMode = "white".equals(mode);
+        boolean isBlocked = whiteMode
+                ? !Whitelist.isAllowed(qname)          // 白名单：除提现/支付/系统外全拒
+                : AdHosts.INSTANCE.isAdHost(qname);    // 黑名单：只拒广告域名
+
         byte[] answer;
-        if (AdHosts.INSTANCE.isAdHost(qname)) {
+        if (isBlocked) {
             blockedCount.incrementAndGet();
             persist();
+            BlockLog.append(this, qname);
             answer = buildRcode(dns, qEnd, 3);
         } else {
             byte[] resp = forward(dns);
